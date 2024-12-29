@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μοίρασε την αγάπη σου στον κόσμο</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="sendLocation">Μοίρασε την αγάπη σου στον κόσμο</button>
+
+    <script>
+        document.getElementById('sendLocation').onclick = function() {
+            if (confirm("Θέλεις να μοιρασείς την αγάπη σου στον κόσμο;")) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        const email = "akispatetsos@gmail.com";
+                        const subject = "Μοιράσου την αγάπη σου";
+                        const body = `Η άγαπη μου είναι:\n\nΓεωγραφικό Πλάτος: ${latitude}\nΓεωγραφικό Μήκος: ${longitude}`;
+                        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    }, function() {
+                        alert("Η αγάπη δεν μπόρεσε να καθοριστεί.");
+                    });
+                } else {
+                    alert("Η γεωγραφική τοποθεσία δεν υποστηρίζεται από αυτόν τον φυλλομετρητή.");
+                }
+            }
+        };
+    </script>
+</body>
+</html>
